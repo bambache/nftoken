@@ -6,8 +6,8 @@ import { LAMPORTS_PER_SOL } from "../../utils/constants";
 import { NftokenTypes } from "../../utils/NftokenTypes";
 import { LuxButton } from "../atoms/LuxButton";
 import { LuxSubmitButton } from "../atoms/LuxButton";
-import { LuxInputField} from "../atoms/LuxInput.tsx"
-import { Form, Formik, useFormikContext } from "formik";
+import { LuxInputField } from "../atoms/LuxInput";
+import { Form, Formik } from "formik";
 import { useNetworkContext } from "../atoms/NetworkContext";
 
 type FormData = {
@@ -51,11 +51,13 @@ export const MintlistForSale = ({
               console.log(totalMintNumber);
 
               while(totalMintNumber > 0) {
-                var mintNumber:number = 0;
-                if (totalMintNumber >= maxMint)
+                let mintNumber:number = 0;
+                if (totalMintNumber >= maxMint) {
                   mintNumber = maxMint;
-                else
+                }
+                else {
                   mintNumber = totalMintNumber%maxMint;
+                }
 
                 console.log(mintNumber);
                 if (mintNumber > 0) {
