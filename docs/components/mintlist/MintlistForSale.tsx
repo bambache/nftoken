@@ -17,13 +17,14 @@ export const MintlistForSale = ({
   const minting = useBoolean();
   const feeString =
     parseInt(mintlist.price.lamports) / LAMPORTS_PER_SOL + " SOL";
+  const mintNumber = parseInt("5");
 
   return (
     <div className="mt-5">
       <div className="text-xl flex-column flex-center-center gap-3 mb-3 font-weight-medium">
         <div>This Mintlist is now For Sale.</div>
 
-        <div>You can mint an NFT for {feeString}</div>
+        <div>You can mint {mintNumber} NFTs for {feeString} each</div>
       </div>
 
       <div className="flex-center-center">
@@ -39,6 +40,7 @@ export const MintlistForSale = ({
                 wallet,
                 network,
                 mintlist,
+                mintNumber,
               });
 
               try {
