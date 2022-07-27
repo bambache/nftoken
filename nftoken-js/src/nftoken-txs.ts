@@ -225,21 +225,27 @@ export const constructMintNftTx = async ({
   wallet,
   network,
   mintlist,
+  mintNumber,
 }: {
   wallet: Address;
   network: Network;
   mintlist: NftokenTypes.Mintlist;
+  mintNumber: number;
 }) => {
   const recentBlockhash = await SolanaClient.getRecentBlockhash({
     rpcUrl: NETWORK_TO_RPC[network],
   });
 
-  const nftKeypair = GKeypair.generate();
 
-  const gtransaction = GTransaction.create({
-    feePayer: wallet,
-    recentBlockhash,
-    instructions: [
+  var my_instructions = [];
+  var my_signers = [];
+
+  console.log(mintNumber);
+
+  for (let index = 0; index < mintNumber; index++) {
+    const nftKeypair = GKeypair.generate();
+
+    my_instructions.push(
       {
         accounts: [
           { address: wallet, signer: true, writable: true },
@@ -255,8 +261,19 @@ export const constructMintNftTx = async ({
           ix: null,
         }).toString("base64"),
       },
-    ],
-    signers: [nftKeypair],
+    );
+
+    my_signers.push(nftKeypair);
+  }
+
+  console.log(my_instructions);
+  console.log(my_signers);
+
+  const gtransaction = GTransaction.create({
+    feePayer: wallet,
+    recentBlockhash,
+    instructions: my_instructions,
+    signers: my_signers,
   });
 
   return {

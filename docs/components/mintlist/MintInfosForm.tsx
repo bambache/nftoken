@@ -227,7 +227,7 @@ const MintInfoRows = ({ availableToUpload }: { availableToUpload: number }) => {
                   />
 
                   <LuxInputField
-                    placeholder={`NFT Name #${String(index).padStart(3, "0")}`}
+                    placeholder={`NFT Name`}
                     name={`mint_infos.${index}.name`}
                   />
 
@@ -245,20 +245,39 @@ const MintInfoRows = ({ availableToUpload }: { availableToUpload: number }) => {
             </div>
 
             {values.mint_infos.length < availableToUpload && (
-              <LuxButton
-                label="Add Mint Info"
-                size={"small"}
-                type="button"
-                variant="outline"
-                color="secondary"
-                className="mt-4 animated"
-                onClick={() => {
-                  insert(values.mint_infos.length, {
-                    name: "",
-                    image: "",
-                  });
-                }}
-              />
+            <div>
+                <LuxButton
+                  label="Add Mint Info"
+                  size={"small"}
+                  type="button"
+                  variant="outline"
+                  color="secondary"
+                  className="mt-4 animated"
+                  onClick={() => {
+                    insert(values.mint_infos.length, {
+                      name: "",
+                      image: "",
+                    });
+                  }}
+                />
+                <LuxButton
+                  label="Fill Mint Info"
+                  size={"small"}
+                  type="button"
+                  variant="outline"
+                  color="secondary"
+                  className="mt-4 animated"
+                  onClick={() => {
+                    for (let index = 0; index < availableToUpload - values.mint_infos.length; index++) {
+                    insert(values.mint_infos.length, {
+                      name: values.mint_infos[values.mint_infos.length-1].name,
+                      image: values.mint_infos[values.mint_infos.length-1].image,
+                    });
+                      
+                    }
+                  }}
+                />
+            </div>
             )}
           </div>
         )}
